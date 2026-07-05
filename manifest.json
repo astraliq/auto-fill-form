@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Fill Form",
+  "version": "1.0.0",
+  "description": "Автозаполнение форм тестовыми данными через контекстное меню",
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Auto Fill Form — Настройки",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "content/settings.js",
+        "content/surname-formatter.js",
+        "content/data-loader.js",
+        "content/fio-grouper.js",
+        "content/field-detector.js",
+        "content/field-filler.js",
+        "content/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["data/test-data.json"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

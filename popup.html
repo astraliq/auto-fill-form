@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Auto Fill Form — Настройки</title>
+  <style>
+    body {
+      width: 360px;
+      margin: 0;
+      padding: 16px;
+      font: 14px/1.4 Arial, sans-serif;
+      color: #1f2937;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 72px;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      resize: vertical;
+      font: inherit;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #status {
+      font-size: 12px;
+      color: #059669;
+    }
+
+    .hint {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+
+    .checkbox-list {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+
+    .checkbox-item input {
+      margin-top: 2px;
+    }
+
+    .radio-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+
+    .radio-item input {
+      margin: 0;
+    }
+
+    .section-title {
+      margin: 16px 0 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Auto Fill Form</h1>
+  <p>Исключить поля, в <code>name</code> или <code>id</code> которых есть указанные слова.</p>
+
+  <label for="excludeWords">Слова для исключения</label>
+  <textarea
+    id="excludeWords"
+    placeholder="to_pay, agent_profit, promotion_id"
+  ></textarea>
+
+  <h2 class="section-title">Язык заполнения</h2>
+  <ul class="radio-list">
+    <li>
+      <label class="radio-item">
+        <input type="radio" name="fillLanguage" value="ru" checked>
+        <span>Русский</span>
+      </label>
+    </li>
+    <li>
+      <label class="radio-item">
+        <input type="radio" name="fillLanguage" value="en">
+        <span>English</span>
+      </label>
+    </li>
+    <li>
+      <label class="radio-item">
+        <input type="radio" name="fillLanguage" value="random">
+        <span>Случайно (ru/en на каждое заполнение)</span>
+      </label>
+    </li>
+  </ul>
+
+  <h2 class="section-title">Пропускать поля</h2>
+  <ul class="checkbox-list">
+    <li>
+      <label class="checkbox-item" for="skipReadonly">
+        <input type="checkbox" id="skipReadonly" checked>
+        <span>Не заполнять поля с атрибутом <code>readonly</code></span>
+      </label>
+    </li>
+    <li>
+      <label class="checkbox-item" for="skipDisabled">
+        <input type="checkbox" id="skipDisabled" checked>
+        <span>Не заполнять поля с атрибутом <code>disabled</code></span>
+      </label>
+    </li>
+  </ul>
+
+  <h2 class="section-title">Предпочтительные значения</h2>
+  <p>Приоритетнее тестовых данных. Одна строка — одно правило.</p>
+
+  <label for="fieldPreferences">Правила полей</label>
+  <textarea
+    id="fieldPreferences"
+    placeholder="tourist_type=0,2&#10;clients-tels=+7 (900) 111-11-11,+7 (901) 222-22-22&#10;gender=1,0"
+  ></textarea>
+
+  <div class="actions">
+    <button id="save" type="button">Сохранить</button>
+    <span id="status"></span>
+  </div>
+
+  <div class="hint">
+    <strong>Исключения:</strong> слова через запятую. Пример: <code>to_pay, promotion</code><br><br>
+    <strong>Предпочтения:</strong> формат <code>фрагмент name/id=значение1,значение2</code>.<br>
+    Если <code>name</code> или <code>id</code> содержит фрагмент — подставляется случайное значение из списка.<br>
+    Правила сверху вниз: используется первое совпадение.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
